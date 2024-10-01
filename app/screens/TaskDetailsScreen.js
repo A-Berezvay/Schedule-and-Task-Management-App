@@ -1,13 +1,41 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { TaskContext } from '../context/TaskContext';
 
-const TaskDetailsScreen = ({ route }) => {
-  const { taskName, time } = route.params;
+const TaskDetailsScreen = ({ route, navigation }) => {
+  const { taskName, time, index } = route.params;
+  const { editTask, deleteTask } = useContext(TaskContext);
+
+  const[newTaskName, setNewTaskName] = useState(taskName);
+  const [newTime, setNewTime] = useState(time);
+
+  const handleSave = () => {
+    const updatedTask = { name: newTaskName, time: newTime };
+    editTask(index, updatedTask);
+    navigation.goBack();
+  };
+
+  const handleDelete = () => {
+    deleteTask(index);
+    navigation.goBack();
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{taskName}</Text>
-      <Text style={styles.time}>Time: {time}</Text>
+      <Text style={styles.label}>Edit Task:</Text>
+      <TextInput
+        style={styles.input}
+        value={newTaskName}
+        onChangeText={setNewTaskName}
+      />
+      <Text style={styles.label}>Edit Time:</Text>
+      <TextInput
+        style={styles.input}
+        value={newTime}
+        onChangeText={setNewTime}
+      />
+      <Button title="Save Changes" onPress={handleSave} />
+      <Button title="Delete Task" onPress={handleDelete} color="red" />
     </View>
   );
 };
@@ -19,13 +47,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 16,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+  label: {
+    fontSize: 16,
+    marginTop: 16,
   },
-  time: {
-    fontSize: 18,
-    marginTop: 8,
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 8,
+    marginVertical: 10,
+    width: '80%',
   },
 });
 
