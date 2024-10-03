@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { globalStyles } from '../styles/globalStyles';
 import { View, Button, ScrollView, TouchableOpacity } from 'react-native';
 import { TaskContext } from '../context/TaskContext';
 import TaskCard from '../components/TaskCard';
@@ -14,7 +15,7 @@ const HomeScreen = () => {
 
 
   return (
-    <View>
+    <View style={globalStyles.container}>
       <Button 
         title={showCompleted ? "Show Incomplete" : "Show Completed"}
         onPress={() => setShowCompleted(!showCompleted)}

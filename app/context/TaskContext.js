@@ -34,7 +34,7 @@ const TaskProvider = ({ children }) => {
   }, [tasks]);
 
   const addTask = (task) => {
-    setTasks([...tasks, task]);
+    setTasks([...tasks, {...task, priority: task.priority || 'low'}]);
   };
 
   const editTask = (index, updatedTask) => {

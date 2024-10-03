@@ -1,12 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet, Switch } from 'react-native';
 
-const TaskCard = ({ taskName, time, completed, onToggleComplete }) => {
+const TaskCard = ({ taskName, time, completed, priority, onToggleComplete }) => {
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, priorityStyles[priority]]}>
       <View style={styles.info}>
         <Text style={completed ? styles.completed : styles.name}>{taskName}</Text>
         <Text style={styles.time}>{time}</Text>
+        <Text style={styles.priority}>Priority: {priority}</Text>
       </View>
       <Switch 
         value={completed}
@@ -43,9 +44,28 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
   },
+  priority: {
+    marginTop: 8,
+    fontSize: 14,
+  },
   info: {
     flexDirection: 'column',
   },
 });
+
+const priorityStyles = {
+  low: {
+    borderLeftWidth: 4,
+    borderLeftColor: 'green',
+  },
+  medium: {
+    borderLeftWidth: 4,
+    borderLeftColor: 'orange',
+  },
+  high: {
+    borderLeftWidth: 4,
+    borderLeftColor: 'red',
+  },
+};
 
 export default TaskCard;
